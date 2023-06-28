@@ -17,7 +17,7 @@ dfx canister install motoko_migrations --argument='(variant { init = variant { v
 In main.mo, change every occurence of v0_1_0 to v0_2_0. In src/migrations/types.mo, change to Current = Migrations002. Then upgrade the canister with:
 
 ```bash
-dfx canister install motoko_migrations --argument='(variant { upgrade = vec { variant { v0_2_0 = record { controllers = vec {}  } } } } )' --mode=upgrade
+dfx canister install motoko_migrations --argument='(variant { upgrade = vec { variant { v0_2_0 = record { controllers = vec {principal "tsfj2-4p75k-3nxgx-2zlqp-jvi"; principal "qs2ge-3kbft-lnn6j-e5hxb-gxi" } } } } } )' --mode=upgrade
 ```
 
 ### Upgrade to 0_3_0
@@ -25,7 +25,7 @@ dfx canister install motoko_migrations --argument='(variant { upgrade = vec { va
 In main.mo, change every occurence of v0_2_0 to v0_3_0. In src/migrations/types.mo, change to Current = Migrations003. In WrappedState.mo, comment the first class and uncomment the second class. Then upgrade the canister with:
 
 ```bash
-dfx canister install motoko_migrations --argument='(variant { upgrade = vec { variant { v0_3_0 = record { controllers = vec {}; schoolName="school of rock"; } } } } )' 
+dfx canister install motoko_migrations --argument='(variant { upgrade = vec { variant { v0_3_0 = record { schoolName="school of rock"; } } } } )' 
 --mode=upgrade
 ```
 

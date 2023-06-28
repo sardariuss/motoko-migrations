@@ -42,4 +42,20 @@ shared actor class MotokoMigrations(args: MigrationTypes.Args) {
   public query func fetchStudents(): async Types.FetchStudentsResponse {
     wrapped.fetchStudents();
   };
+
+  public query func getControllers() : async [Principal] {
+    switch (migrationState) {
+      case (#v0_1_0(state)) { [state.controller]; };
+      case (#v0_2_0(state)) { state.controllers; };
+      case (#v0_3_0(state)) { state.controllers; };
+    };
+  };
+
+  public query func getSchoolName() : async Text {
+    switch (migrationState) {
+      case (#v0_3_0(state)) { state.schoolName; };
+      case (_) { Debug.trap("School name does not exist before v0.3.0"); };
+    };
+  };
+
 };
