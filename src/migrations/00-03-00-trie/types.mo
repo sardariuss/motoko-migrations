@@ -30,13 +30,20 @@ module {
     var students: Trie.Trie<Text, Student>;
   };
 
+  public type Args = {
+    #init: InitArgs;
+    #upgrade: UpgradeArgs;
+    #downgrade: DowngradeArgs;
+    #none;
+  };
   public type InitArgs = {
     controllers: [Principal];
     schoolName: Text;
   };
-
   public type UpgradeArgs = {
     schoolName: Text;
+  };
+  public type DowngradeArgs = {
   };
 
 };

@@ -27,14 +27,21 @@ module {
     var students: [Student];
   };
 
+  public type Args = {
+    #init: InitArgs;
+    #upgrade: UpgradeArgs;
+    #downgrade: DowngradeArgs;
+    #none;
+  };
+
   public type InitArgs = {
     controllers: [Principal];
   };
-
   public type UpgradeArgs = {
     controllers: [Principal];
   };
-
-  public type DowngradeArgs = {};
+  public type DowngradeArgs = {
+    controller: Principal;
+  };
   
 };

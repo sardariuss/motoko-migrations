@@ -9,7 +9,7 @@ Sample project structure to implement migrations in motoko
 ```bash
 dfx create canister motoko_migrations
 dfx build
-dfx canister install motoko_migrations --argument='(variant { init = variant { v0_1_0 = record { controller = principal "aaaaa-aa" } } } )'
+fx canister install motoko_migrations --argument='(variant { init = record { controller = principal "aaaaa-aa" } } )'
 ```
 
 ### Upgrade to 0_2_0
@@ -17,7 +17,7 @@ dfx canister install motoko_migrations --argument='(variant { init = variant { v
 In main.mo, change every occurence of v0_1_0 to v0_2_0. In src/migrations/types.mo, change to Current = Migrations002. Then upgrade the canister with:
 
 ```bash
-dfx canister install motoko_migrations --argument='(variant { upgrade = vec { variant { v0_2_0 = record { controllers = vec {principal "tsfj2-4p75k-3nxgx-2zlqp-jvi"; principal "qs2ge-3kbft-lnn6j-e5hxb-gxi" } } } } } )' --mode=upgrade
+dfx canister install motoko_migrations --argument='(variant { upgrade = record { controllers = vec {} } } )' --mode=upgrade
 ```
 
 ### Upgrade to 0_3_0
@@ -25,24 +25,28 @@ dfx canister install motoko_migrations --argument='(variant { upgrade = vec { va
 In main.mo, change every occurence of v0_2_0 to v0_3_0. In src/migrations/types.mo, change to Current = Migrations003. In WrappedState.mo, comment the first class and uncomment the second class. Then upgrade the canister with:
 
 ```bash
-dfx canister install motoko_migrations --argument='(variant { upgrade = vec { variant { v0_3_0 = record { schoolName="school of rock"; } } } } )' 
---mode=upgrade
+dfx canister install motoko_migrations --argument='(variant { upgrade = record { controllers = vec {} ; schoolName="polytechnique"; } } )' --mode=upgrade
 ```
 
 ### Downgrade to 0_2_0
 
-In main.mo, change every occurence of v0_3_0 to v0_2_0. In src/migrations/types.mo, change to Current = Migrations002. In WrappedState.mo, comment the second class and comment the first class. Then upgrade the canister with:
-
+Still use v3 to downgrade state
 ```bash
-dfx canister install motoko_migrations --argument='(variant { downgrade = vec {} } )' --mode=upgrade
+dfx canister install motoko_migrations --argument='(variant { downgrade = record {} } )' --mode=upgrade --upgrade-unchanged
 ```
-
+Then use v2 to update canister interface
+```bash
+dfx canister install motoko_migrations --argument='(variant { none } )'
+```
 ### Downgrade to 0_1_0
 
-In main.mo, change every occurence of v0_3_0 to v0_2_0. In src/migrations/types.mo, change to Current = Migrations002. Then upgrade the canister with:
-
+Still use v2 to downgrade state
 ```bash
-dfx canister install motoko_migrations --argument='(variant { downgrade = vec { variant { v0_1_0 = record { controller = principal "aaaaa-aa" } } } } )' --mode=upgrade
+dfx canister install motoko_migrations --argument='(variant { downgrade = record { controller = "aaaaa-aa" } } )' --mode=upgrade --upgrade-unchanged
+```
+Then use v1 to update canister interface
+```bash
+dfx canister install motoko_migrations --argument='(variant { none } )' --mode=upgrade
 ```
 
 ## Misc
